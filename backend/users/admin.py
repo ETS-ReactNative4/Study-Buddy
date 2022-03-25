@@ -9,10 +9,13 @@ class AppointmentModelAdmin(admin.ModelAdmin):
     fields = [
         "username",
         "email",
+        "password",
     ]
     list_display = [
+        "id",
         "username",
         "email",
+        "password",
         "get_appointments",
     ]
 

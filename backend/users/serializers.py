@@ -1,9 +1,8 @@
-from django.db.models import Q  # for queries
+from django.db.models import Q
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from .models import User
 from django.core.exceptions import ValidationError
-from uuid import uuid4
 
 
 class UserSerializer(serializers.ModelSerializer):

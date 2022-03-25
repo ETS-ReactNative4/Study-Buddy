@@ -19,6 +19,7 @@ class AppointmentModelAdmin(admin.ModelAdmin):
         "host",
     ]
     list_display = [
+        "id",
         "topic",
         "subject",
         "description",
