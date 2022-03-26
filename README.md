@@ -155,3 +155,15 @@ response:
         }
     }
 ]
+
+9. endpoint: http://127.0.0.1:8000/match_user/
+request:
+{
+    "username": "miko"
+}
+response:
+{
+    "username": "abyl",
+    "good": ["химия"],
+    "bad": ["география"]
+}
