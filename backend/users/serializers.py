@@ -16,13 +16,17 @@ class UserSerializer(serializers.ModelSerializer):
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
     password = serializers.CharField(max_length=20)
+    good = serializers.JSONField(required=True)
+    bad = serializers.JSONField(required=True)
 
     class Meta:
         model = User
         fields = (
             'username',
             'email',
-            'password'
+            'password',
+            'good',
+            'bad'
         )
 
 
@@ -75,6 +79,7 @@ class UserLogoutSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         username = data.get("username", None)
+        print(username)
         user = None
         try:
             user = User.objects.get(username=username)
