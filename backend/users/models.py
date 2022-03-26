@@ -6,6 +6,8 @@ class User(models.Model):
     email = models.EmailField(max_length=255, null=False)
     password = models.CharField(max_length=50)
     ifLogged = models.BooleanField(default=False)
+    good = models.JSONField(default=list)
+    bad = models.JSONField(default=list)
 
     def __str__(self):
         return f"{self.username}"
