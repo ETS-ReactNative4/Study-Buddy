@@ -1,7 +1,12 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth.models import Group
 
 from .models import User
+
+admin.site.unregister(AuthUser)
+admin.site.unregister(Group)
 
 
 @admin.register(User)

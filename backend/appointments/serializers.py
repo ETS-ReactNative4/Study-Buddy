@@ -75,3 +75,21 @@ class AppointmentCreateSerializer(serializers.ModelSerializer):
             "host_username",
             "place_id_field",
         )
+
+
+class AppointmentJoinSerializer(serializers.ModelSerializer):
+    username = serializers.CharField()
+    appointment_id = serializers.IntegerField()
+
+    def validate(self, data):
+        user = User.objects.filter(Q(username=data['username']))
+        appointment = Appointment.objects.filter(Q(id=data['appointment_id']))
+        if not user.exists():
+            raise ValidationError("username is not found.")
+        if not appointment.exists():
+            raise ValidationError("appointment is not found.")
+        return data
+
+    class Meta:
+        model = Appointment
+        fields = ("username", "appointment_id")
