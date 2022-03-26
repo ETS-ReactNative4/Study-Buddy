@@ -15,7 +15,22 @@ response:
 }
 
 2. endpoint: http://127.0.0.1:8000/users/register/
-# TODO: Dastan
+request:
+{
+    "username": "username",
+    "email": "email",
+    "password": "password",
+    "good": [],
+    "bad": [],
+}
+response:
+{
+    "username": "username",
+    "email": "email",
+    "password": "password",
+    "good": [],
+    "bad": [],
+}
 
 3. endpoint: http://127.0.0.1:8000/users/logout/
 request:
@@ -108,11 +123,12 @@ response:
     "appointment_id": "1"
 }
 
-8. endpoint: http://127.0.0.1:8000/appointments/get_filtered/
+8. endpoint: http://127.0.0.1:8000/appointments/
 request:
 {
     "subject": "",
-    "topic": ""
+    "topic": "",
+    "username": "",
 }
 response:
 [
