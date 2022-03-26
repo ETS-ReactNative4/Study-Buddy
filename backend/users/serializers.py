@@ -75,7 +75,6 @@ class UserLogoutSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         username = data.get("username", None)
-        print(username)
         user = None
         try:
             user = User.objects.get(username=username)
