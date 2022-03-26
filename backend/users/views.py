@@ -116,5 +116,8 @@ class MatchUser(generics.GenericAPIView):
             if not data['Matches']:
                 return Response('The matched user didn\'t found', status=HTTP_404_NOT_FOUND)
             matched_user = User.objects.get(id=data['Matches'][0])
-            return Response(matched_user.username, status=HTTP_200_OK)
+            response_body = {'username': matched_user.username,
+                             'good': matched_user.good,
+                             'bad': matched_user.bad}
+            return Response(response_body, status=HTTP_200_OK)
         return Response(serializer_class.errors, status=HTTP_400_BAD_REQUEST)
