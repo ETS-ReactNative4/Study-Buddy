@@ -1,3 +1,4 @@
+from typing import OrderedDict
 from django.db.models import Q
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
@@ -90,3 +91,17 @@ class UserLogoutSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('status', 'username')
+
+
+class UserGetAppointmentsSerializer(serializers.ModelSerializer):
+    username = serializers.CharField()
+
+    def validate(self, data):
+        user = User.objects.filter(Q(username=data['username']))
+        if not user.exists():
+            raise ValidationError("username is not found.")
+        return data
+
+    class Meta:
+        model = User
+        fields = ('username', )
