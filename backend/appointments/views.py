@@ -45,23 +45,23 @@ class GetFiltered(generics.GenericAPIView):
     serializer_class = AppointmentsGetFilteredSerializer
 
     def get_appointments(self, data):
-        filtered_appointments = []
-        subject, topic = data['subject'], data['topic']
-        if subject != '' and topic != '':
-            appointments = Appointment.objects.filter(
-                subject=subject, topic=topic)
-        elif subject != '' and topic == '':
-            appointments = Appointment.objects.filter(subject=subject)
-        elif subject == '' and topic != '':
-            appointments = Appointment.objects.filter(topic=topic)
+        appointments = []
+        username = data['username']
+        if username == '':
+            for app in Appointment.objects.all():
+                appointments.append(app)
         else:
-            appointments = Appointment.objects.all()
-
+            all_appointments = Appointment.objects.all()
+            for app in all_appointments:
+                if app.users.filter(username=username).count() > 0:
+                    appointments.append(app)
+        filtered_appointments = []
         for appointment in appointments:
             appointment_users = []
             for user in appointment.users.all():
                 appointment_users.append(user.username)
             appointment_info = {
+                "id": appointment.id,
                 "topic": appointment.topic,
                 "subject": appointment.subject,
                 "description": appointment.description,

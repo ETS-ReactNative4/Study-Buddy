@@ -6,6 +6,7 @@ import requests
 from .models import User
 from .serializers import UserSerializer, UserLoginSerializer, UserLogoutSerializer, UserGetAppointmentsSerializer
 
+
 class Register(generics.ListCreateAPIView):
     # get method handler
     queryset = User.objects.all()
@@ -48,6 +49,7 @@ class GetAppointments(generics.GenericAPIView):
             for user in appointment.users.all():
                 appointment_users.append(user.username)
             appointment_info = {
+                "id": appointment.id,
                 "topic": appointment.topic,
                 "subject": appointment.subject,
                 "description": appointment.description,
