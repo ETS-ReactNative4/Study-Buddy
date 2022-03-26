@@ -93,3 +93,15 @@ class AppointmentJoinSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointment
         fields = ("username", "appointment_id")
+
+
+class AppointmentsGetFilteredSerializer(serializers.ModelSerializer):
+    subject = serializers.CharField(allow_blank=True)
+    topic = serializers.CharField(allow_blank=True)
+
+    def validate(self, data):
+        return data
+
+    class Meta:
+        model = Appointment
+        fields = ('subject', 'topic')
