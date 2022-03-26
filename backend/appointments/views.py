@@ -45,38 +45,46 @@ class GetFiltered(generics.GenericAPIView):
     serializer_class = AppointmentsGetFilteredSerializer
 
     def get_appointments(self, data):
-        appointments = Appointment.objects.all()
         filtered_appointments = []
+        subject, topic = data['subject'], data['topic']
+        if subject != '' and topic != '':
+            appointments = Appointment.objects.filter(
+                subject=subject, topic=topic)
+        elif subject != '' and topic == '':
+            appointments = Appointment.objects.filter(subject=subject)
+        elif subject == '' and topic != '':
+            appointments = Appointment.objects.filter(topic=topic)
+        else:
+            appointments = Appointment.objects.all()
 
-        return data
-        # for appointment in appointments:
-        #     appointment_users = []
-        #     for user in appointment.users.all():
-        #         appointment_users.append(user.username)
-        #     appointment_info = {
-        #         "topic": appointment.topic,
-        #         "subject": appointment.subject,
-        #         "description": appointment.description,
-        #         "date": appointment.date,
-        #         "time": appointment.time,
-        #         "offline_mode": appointment.offline_mode,
-        #         "meeting_link": appointment.meeting_link,
-        #         "host_username": appointment.host.username,
-        #         "place_id_field": appointment.place_id_field,
-        #         "place": {
-        #             "name": appointment.place.name,
-        #             "info_link": appointment.place.info_link,
-        #             "verified": appointment.place.verified,
-        #             "lat": appointment.place.lat,
-        #             "lng": appointment.place.lng,
-        #         },
-        #         "users": appointment_users,
-        #         "host": {
-        #             "username": appointment.host.username,
-        #         },
-        #     }
-        #     user_appointments.append(appointment_info)
-        # return user_appointments
+        for appointment in appointments:
+            appointment_users = []
+            for user in appointment.users.all():
+                appointment_users.append(user.username)
+            appointment_info = {
+                "topic": appointment.topic,
+                "subject": appointment.subject,
+                "description": appointment.description,
+                "date": appointment.date,
+                "time": appointment.time,
+                "offline_mode": appointment.offline_mode,
+                "meeting_link": appointment.meeting_link,
+                "host_username": appointment.host.username,
+                "place_id_field": appointment.place_id_field,
+                "place": {
+                    "name": appointment.place.name,
+                    "info_link": appointment.place.info_link,
+                    "verified": appointment.place.verified,
+                    "lat": appointment.place.lat,
+                    "lng": appointment.place.lng,
+                },
+                "users": appointment_users,
+                "host": {
+                    "username": appointment.host.username,
+                },
+            }
+            filtered_appointments.append(appointment_info)
+        return filtered_appointments
 
     def post(self, request, *args, **kwargs):
         serializer_class = AppointmentsGetFilteredSerializer(data=request.data)

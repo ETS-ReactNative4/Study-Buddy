@@ -39,7 +39,6 @@ class Command(BaseCommand):
             status.HTTP_401_UNAUTHORIZED: UnauthorizedRequestException,
         }
         message = f"Wrong response code: {response.status_code}, body: {response.text}"
-        print(message)
 
         exception_class = exceptions.get(
             response.status_code, InternalGoogleException
