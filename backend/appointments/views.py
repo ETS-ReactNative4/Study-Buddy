@@ -48,7 +48,6 @@ class GetFiltered(generics.GenericAPIView):
     def get_appointments(self, data):
         appointments = []
         username = data['username']
-        print(username)
         if username == '':
             for app in Appointment.objects.all():
                 appointments.append(app)

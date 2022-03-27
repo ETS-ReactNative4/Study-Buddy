@@ -7,6 +7,7 @@ from .models import User
 from appointments.models import Appointment
 from .serializers import UserSerializer, UserLoginSerializer, UserLogoutSerializer, UserGetAppointmentsSerializer
 
+
 class Register(generics.ListCreateAPIView):
     # get method handler
     queryset = User.objects.all()
@@ -58,6 +59,7 @@ class GetAppointments(generics.GenericAPIView):
             if okay == False:
                 continue
             appointment_info = {
+                "id": appointment.id,
                 "topic": appointment.topic,
                 "subject": appointment.subject,
                 "description": appointment.description,
