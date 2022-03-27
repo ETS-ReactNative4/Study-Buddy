@@ -59,8 +59,6 @@ class UserLoginSerializer(serializers.ModelSerializer):
             if not user.exists():
                 raise ValidationError("User credentials are not correct.")
             user = User.objects.get(username=username)
-        if user.ifLogged:
-            raise ValidationError("User already logged in.")
         user.ifLogged = True
         user.save()
         return data
@@ -101,6 +99,7 @@ class UserGetAppointmentsSerializer(serializers.ModelSerializer):
     username = serializers.CharField()
 
     def validate(self, data):
+        print(data)
         user = User.objects.filter(Q(username=data['username']))
         if not user.exists():
             raise ValidationError("username is not found.")
