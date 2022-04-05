@@ -14,9 +14,6 @@ response:
     "password": "abyl"
 }
 
-2. endpoint: http://127.0.0.1:8000/users/register/
-# TODO: Dastan
-
 3. endpoint: http://127.0.0.1:8000/users/logout/
 request:
 {
