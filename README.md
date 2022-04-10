@@ -2,6 +2,8 @@
 
 A mobile application for finding like-minded people in education.
 
+[Got awarded with 1,000,000 KZT on Bilim Hackaton]
+
 ### Tech Stack: 
   - Backend: Django
   - Mobile: React Native
