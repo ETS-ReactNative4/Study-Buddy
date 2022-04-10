@@ -15,6 +15,7 @@ class Create(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         serializer_class = AppointmentCreateSerializer(data=request.data)
+        print(request.data)
         if serializer_class.is_valid(raise_exception=True):
             return Response(serializer_class.data, status=HTTP_200_OK)
         return Response(serializer_class.errors, status=HTTP_400_BAD_REQUEST)
@@ -53,7 +54,7 @@ class GetFiltered(generics.GenericAPIView):
         else:
             all_appointments = Appointment.objects.all()
             for app in all_appointments:
-                if app.users.filter(username=username).count() > 0:
+                if app.users.filter(username=username).count() == 0 and app.host.username != username:
                     appointments.append(app)
         filtered_appointments = []
         for appointment in appointments:
@@ -70,14 +71,7 @@ class GetFiltered(generics.GenericAPIView):
                 "offline_mode": appointment.offline_mode,
                 "meeting_link": appointment.meeting_link,
                 "host_username": appointment.host.username,
-                "place_id_field": appointment.place_id_field,
-                "place": {
-                    "name": appointment.place.name,
-                    "info_link": appointment.place.info_link,
-                    "verified": appointment.place.verified,
-                    "lat": appointment.place.lat,
-                    "lng": appointment.place.lng,
-                },
+                "place_name": appointment.place_name,
                 "users": appointment_users,
                 "host": {
                     "username": appointment.host.username,

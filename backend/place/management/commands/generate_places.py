@@ -55,13 +55,13 @@ class Command(BaseCommand):
         parser.add_argument(
             "--radius",
             type=str,
-            default="500",
+            default="5000",
             help="Search places in this radius.",
         )
         parser.add_argument(
             "--type",
             type=str,
-            default="university",
+            default="cafe",
             help="Type of the place to get.",
         )
 

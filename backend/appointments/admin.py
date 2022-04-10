@@ -15,7 +15,7 @@ class AppointmentModelAdmin(admin.ModelAdmin):
         "offline_mode",
         "meeting_link",
         "users",
-        "place",
+        "place_name",
         "host",
     ]
     list_display = [
@@ -28,7 +28,7 @@ class AppointmentModelAdmin(admin.ModelAdmin):
         "offline_mode",
         "meeting_link",
         "get_users",
-        "place",
+        "place_name",
         "host",
     ]
 

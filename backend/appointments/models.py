@@ -6,21 +6,15 @@ from place.models import Place
 
 
 class Appointment(models.Model):
-    topic = models.CharField(max_length=50)
-    subject = models.CharField(max_length=50)
-    description = models.CharField(max_length=1000)
-    date = models.DateField()
-    time = models.TimeField()
-    offline_mode = models.BooleanField(default=True)
-    meeting_link = models.CharField(max_length=255, blank=True)
-    host_username = models.CharField(max_length=50)
-    place_id_field = models.IntegerField()
-    place = models.ForeignKey(
-        Place,
-        verbose_name=_("Place"),
-        on_delete=models.PROTECT,
-        related_name="place_appointments",
-    )
+    topic = models.CharField(max_length=50, blank=True, null=True)
+    subject = models.CharField(max_length=50, blank=True, null=True)
+    description = models.CharField(max_length=1000, blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
+    time = models.TimeField(blank=True, null=True)
+    offline_mode = models.BooleanField(default=True, blank=True, null=True)
+    meeting_link = models.CharField(max_length=255, blank=True, null=True)
+    host_username = models.CharField(max_length=50, blank=True, null=True)
+    place_name = models.CharField(blank=True, null=True, max_length=60)
     users = models.ManyToManyField(
         User,
         verbose_name=_("User"),
@@ -35,7 +29,6 @@ class Appointment(models.Model):
     )
 
     def save(self, *args, **kwargs):
-        self.place_id_field = self.place.id
         super().save(*args, **kwargs)
 
     def __str__(self):

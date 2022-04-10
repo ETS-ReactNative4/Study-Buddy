@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 import requests
 from .models import User
+from appointments.models import Appointment
 from .serializers import UserSerializer, UserLoginSerializer, UserLogoutSerializer, UserGetAppointmentsSerializer
 
 
@@ -19,6 +20,7 @@ class Login(generics.GenericAPIView):
     serializer_class = UserLoginSerializer
 
     def post(self, request, *args, **kwargs):
+        print(request.data)
         serializer_class = UserLoginSerializer(data=request.data)
         if serializer_class.is_valid(raise_exception=True):
             return Response(serializer_class.data, status=HTTP_200_OK)
@@ -42,12 +44,20 @@ class GetAppointments(generics.GenericAPIView):
 
     def get_appointments(self, username: str):
         user = User.objects.get(username=username)
-        appointments = user.appointments.all()
+        appointments = Appointment.objects.all()
         user_appointments = []
         for appointment in appointments:
             appointment_users = []
+            okay = False
             for user in appointment.users.all():
-                appointment_users.append(user.username)
+                if user.username == username:
+                    okay = True
+                    break
+            if appointment.host.username == username:
+                okay = True
+
+            if okay == False:
+                continue
             appointment_info = {
                 "id": appointment.id,
                 "topic": appointment.topic,
@@ -58,14 +68,7 @@ class GetAppointments(generics.GenericAPIView):
                 "offline_mode": appointment.offline_mode,
                 "meeting_link": appointment.meeting_link,
                 "host_username": appointment.host.username,
-                "place_id_field": appointment.place_id_field,
-                "place": {
-                    "name": appointment.place.name,
-                    "info_link": appointment.place.info_link,
-                    "verified": appointment.place.verified,
-                    "lat": appointment.place.lat,
-                    "lng": appointment.place.lng,
-                },
+                "place_name": appointment.place_name,
                 "users": appointment_users,
                 "host": {
                     "username": appointment.host.username,
@@ -101,6 +104,7 @@ class MatchUser(generics.GenericAPIView):
     serializer_class = UserGetAppointmentsSerializer
 
     def post(self, request, *args, **kwargs):
+        print(request.data)
         serializer_class = UserGetAppointmentsSerializer(data=request.data)
         if serializer_class.is_valid(raise_exception=True):
             user = User.objects.get(username=request.data['username'])
@@ -118,5 +122,8 @@ class MatchUser(generics.GenericAPIView):
             if not data['Matches']:
                 return Response('The matched user didn\'t found', status=HTTP_404_NOT_FOUND)
             matched_user = User.objects.get(id=data['Matches'][0])
-            return Response(matched_user.username, status=HTTP_200_OK)
+            response_body = {'username': matched_user.username,
+                             'good': matched_user.good,
+                             'bad': matched_user.bad}
+            return Response(response_body, status=HTTP_200_OK)
         return Response(serializer_class.errors, status=HTTP_400_BAD_REQUEST)
