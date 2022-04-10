@@ -1,138 +1,36 @@
-# APIs documentation:
+# Study-Buddy project
 
-Valid requests/responses:
+A mobile application for finding like-minded people in education.
 
-1. endpoint: http://127.0.0.1:8000/users/login/
-request:
-{
-    "username": "username",
-    "password": "password"
-}
-response:
-{
-    "username": "abyl",
-    "password": "abyl"
-}
+### Tech Stack: 
+  - Backend: Django
+  - Mobile: React Native
+  - ML: Project "Natasha"
 
-3. endpoint: http://127.0.0.1:8000/users/logout/
-request:
-{
-    "username": "username"
-}
-response:
-{
-    "status": "User is logged out.",
-    "username": "abyl"
-}
+There are three main functionalities in our app: 
+  1) Finding perfect study groups and partners (By using machine learning) 
+  2) Finding upcoming training meetings (implementation using maps and filters such as place, time, subject) 
+  3) Create study meetings (zoom link for online meeting | choosing a place for offline meetings) 
 
-4. endpoint: http://127.0.0.1:8000/users/get_appointments/
-request:
-{
-    "username": "abyl"
-}
-response:
-[
-    {
-        "topic": "awdawd",
-        "subject": "awdaw",
-        "description": "awdawd",
-        "date": "2022-03-25",
-        "time": "21:45:53",
-        "offline_mode": true,
-        "meeting_link": "awdawd",
-        "host_username": "abyl",
-        "place_id_field": 1,
-        "place": {
-            "name": "NU",
-            "info_link": "nu.edu.kz",
-            "verified": true,
-            "lat": 10.0,
-            "lng": 10.0
-        },
-        "users": [
-            "abyl",
-            "miko"
-        ],
-        "host": {
-            "username": "abyl"
-        }
-    }
-]
 
-5. endpoint: http://127.0.0.1:8000/users/get_appointments_number/
-request:
-{
-    "username": "abyl"
-}
-response:
-1
+## Login page;
+![image](https://user-images.githubusercontent.com/55020015/160662598-3478b931-277e-4f5c-89d0-a1951581f740.png)
 
-6. endpoint: http://127.0.0.1:8000/appointments/create/
-request:
-{
-    "topic": "",
-    "subject": "",
-    "description": "",
-    "date": null,
-    "time": null,
-    "offline_mode": false,
-    "meeting_link": "",
-    "host_username": "",
-    "place_id_field": null
-}
-response:
-{
-    "topic": "topic",
-    "subject": "subject",
-    "description": "description",
-    "date": "0001-01-01",
-    "time": "01:01:00",
-    "offline_mode": true,
-    "meeting_link": "aaa",
-    "host_username": "abyl",
-    "place_id_field": 1
-}
 
-7. endpoint: http://127.0.0.1:8000/appointments/join/
-request:
-{
-    "username": "",
-    "appointment_id": null
-}
-response:
-{
-    "username": "abyl",
-    "appointment_id": "1"
-}
+## Home screen:
+![image](https://user-images.githubusercontent.com/55020015/160662717-0a1c49a2-8adf-463b-a912-25e628f14382.png)
 
-8. endpoint: http://127.0.0.1:8000/appointments/get_filtered/
-request:
-{
-    "subject": "",
-    "topic": ""
-}
-response:
-[
-    {
-        "topic": "topic",
-        "subject": "subject",
-        "description": "description",
-        "date": "0001-01-01",
-        "time": "01:01:00",
-        "offline_mode": true,
-        "meeting_link": "aaa",
-        "host_username": "abyl",
-        "place_id_field": 1,
-        "place": {
-            "name": "NU",
-            "info_link": "nu.edu.kz",
-            "verified": true,
-            "lat": 10.0,
-            "lng": 10.0
-        },
-        "users": [],
-        "host": {
-            "username": "abyl"
-        }
-    }
-]
+
+## Map: 
+![image](https://user-images.githubusercontent.com/55020015/160662784-66980334-9310-46bd-8b40-629340f98a58.png)
+
+
+## Finding a perfect study buddy: 
+![image](https://user-images.githubusercontent.com/55020015/160662870-c4ffa60d-ffba-4d6f-b976-3a3863d6d3e5.png)
+
+
+
+## Creating an appoinment (offline|online):
+![image](https://user-images.githubusercontent.com/55020015/160662940-3262a0a6-1f4d-4a9c-aa73-8040e19e8f93.png)
+
+
