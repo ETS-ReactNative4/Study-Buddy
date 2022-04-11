@@ -13,7 +13,7 @@ There are three main functionalities in our app:
   3) Create study meetings (zoom link for online meeting | choosing a place for offline meetings) 
 
 
-## Login page;
+## Login page:
 ![image](https://user-images.githubusercontent.com/55020015/160662598-3478b931-277e-4f5c-89d0-a1951581f740.png)
 
 
